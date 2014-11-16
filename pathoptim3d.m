@@ -1,20 +1,17 @@
 clf
 clear all
-theta = pi/2;
-Rz90 = [cos(theta) -sin(theta);
-sin(theta) cos(theta)];
 
 robotMaxHeight = 1.539;
-robotMinKneeHeight = 0.3;
-robotMaxKneeHeight = 0.5;
+robotMinKneeHeight = 0.2;
+robotMaxKneeHeight = 0.3;
 robotKneeAperture = pi/8;
 robotHipAperture = pi/200;
 robotNeckAperture = pi/16;
 robotHeadAperture = pi/16;
 robotKneeHeadAperture = pi/32;
 distanceWaypoints = 0.5;
+robotRadiusSweptVolume = 0.1;
 
-ay = [0,1,0]';
 az = [0,0,1]';
 a_surface = az;
 b_surface = 0;
@@ -154,9 +151,9 @@ if co < +inf
         plot3(X(1,:),X(2,:),X(3,:),'*-k','LineWidth',3);
         hold on;
         [xS,yS,zS] = sphere;
-        xS = 0.2*xS;
-        yS = 0.2*yS;
-        zS = 0.2*zS;
+        xS = robotRadiusSweptVolume*xS;
+        yS = robotRadiusSweptVolume*yS;
+        zS = robotRadiusSweptVolume*zS;
 
         Ncyl = 5;
         LW = 2;
@@ -168,7 +165,7 @@ if co < +inf
                 plot3(P(1,:),P(2,:),P(3,:),colorSkeleton,'LineWidth',LW)
                 hold on;
 
-                Cylinder(P(:,1),P(:,2),0.2,Ncyl, colorSV, alphaSV, 0,0);
+                Cylinder(P(:,1),P(:,2),robotRadiusSweptVolume,Ncyl, colorSV, alphaSV, 0,0);
                 SpherePlot = surf(xS+P(1,1),yS+P(2,1),zS+P(3,1));
                 set(SpherePlot,'FaceColor',colorSV)
                 set(SpherePlot,'FaceAlpha',alphaSV)
@@ -178,7 +175,7 @@ if co < +inf
                 P = [Zknee(:,i) Zhip(:,i)];
                 plot3(P(1,:),P(2,:),P(3,:),colorSkeleton,'LineWidth',LW)
 
-                Cylinder(P(:,1),P(:,2),0.2,Ncyl, colorSV, alphaSV, 0,0);
+                Cylinder(P(:,1),P(:,2),robotRadiusSweptVolume,Ncyl, colorSV, alphaSV, 0,0);
                 SpherePlot = surf(xS+P(1,1),yS+P(2,1),zS+P(3,1));
                 set(SpherePlot,'FaceColor',colorSV)
                 set(SpherePlot,'FaceAlpha',alphaSV)
@@ -188,7 +185,7 @@ if co < +inf
                 P = [Zhip(:,i) Zneck(:,i)];
                 plot3(P(1,:),P(2,:),P(3,:),colorSkeleton,'LineWidth',LW)
 
-                Cylinder(P(:,1),P(:,2),0.2,Ncyl, colorSV, alphaSV, 0,0);
+                Cylinder(P(:,1),P(:,2),robotRadiusSweptVolume,Ncyl, colorSV, alphaSV, 0,0);
                 SpherePlot = surf(xS+P(1,1),yS+P(2,1),zS+P(3,1));
                 set(SpherePlot,'FaceColor',colorSV)
                 set(SpherePlot,'FaceAlpha',alphaSV)
@@ -197,7 +194,7 @@ if co < +inf
                 P = [Zneck(:,i) Zhead(:,i)];
                 plot3(P(1,:),P(2,:),P(3,:),colorSkeleton,'LineWidth',LW)
 
-                Cylinder(P(:,1),P(:,2),0.2,Ncyl, colorSV, alphaSV, 0,0);
+                Cylinder(P(:,1),P(:,2),robotRadiusSweptVolume,Ncyl, colorSV, alphaSV, 0,0);
                 SpherePlot = surf(xS+P(1,1),yS+P(2,1),zS+P(3,1));
                 set(SpherePlot,'FaceColor',colorSV)
                 set(SpherePlot,'FaceAlpha',alphaSV)
